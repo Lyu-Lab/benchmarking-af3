@@ -1,6 +1,6 @@
 # Benchmarking AlphaFold3 for structure-based ligand discovery
 
-This repository contains the code used in our paper, "Benchmarking AlphaFold3 for structure-based ligand discovery."
+This repository contains the code used in our paper, "AlphaFold3 for Structure-guided Ligand Discovery."
 
 ## Overview
 
