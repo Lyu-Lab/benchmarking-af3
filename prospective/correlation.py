@@ -3,16 +3,16 @@ import pandas as pd
 from scipy import stats
 from scipy.stats import spearmanr
 from matplotlib import pyplot as plt
+import argparse
 
 
-def plot_correlation(experimental_data_path: str, boltz2_affinity_binary_path: str, boltz2_affinity_path: str):
+def plot_correlation(experimental_data_path: str, boltz2_data_path: str):
     """
     Plots the correlation between Boltz affinity predictions and experimental IC50 values.
 
     Args:
         experimental_data_path (str): Path to the CSV file containing experimental IC50 data.
-        boltz2_affinity_binary_path (str): Path to the CSV file containing Boltz affinity binary predictions.
-        boltz2_affinity_path (str): Path to the CSV file containing Boltz affinity predictions.
+        boltz2_data_path (str): Path to the CSV file containing Boltz data.
 
     Returns:
         None
@@ -21,14 +21,11 @@ def plot_correlation(experimental_data_path: str, boltz2_affinity_binary_path: s
     combined = pd.read_csv(experimental_data_path)
     
     combined["log_ic50"] = np.log(combined["ic50"])
-    boltz2_affinity_binary = pd.read_csv(
-        boltz2_affinity_binary_path
+    boltz2_data = pd.read_csv(
+        boltz2_data_path
     )
-    boltz2_affinity = pd.read_csv(
-        boltz2_affinity_path
-    )
-    df = pd.merge(boltz2_affinity_binary, combined, on="zinc_id", how="inner")
-    df2 = pd.merge(boltz2_affinity, combined, on="zinc_id", how="inner")
+    df = pd.merge(boltz2_data, combined, on="zinc_id", how="inner")
+    df = df.dropna(subset=["ic50", "log_ic50"])
 
     x = df["affinity_probability_binary"]
     y = df["log_ic50"]
@@ -60,8 +57,8 @@ def plot_correlation(experimental_data_path: str, boltz2_affinity_binary_path: s
         dpi=600,
     )
 
-    x = df2["affinity_pred_value"]
-    y = df2["log_ic50"]
+    x = df["affinity_pred_value"]
+    y = df["log_ic50"]
     spearman_corr, _ = spearmanr(x, y)
 
     # Create figure and axis
@@ -89,3 +86,11 @@ def plot_correlation(experimental_data_path: str, boltz2_affinity_binary_path: s
         "affinity_probability.png",
         dpi=600,
     )
+
+    
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Plot the correlation between Boltz affinity predictions and experimental IC50 values.")
+    parser.add_argument("--experimental_data_path", type=str, required=True)
+    parser.add_argument("--boltz2_data_path", type=str, required=True)
+    args = parser.parse_args()
+    plot_correlation(args.experimental_data_path, args.boltz2_data_path)
