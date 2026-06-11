@@ -8,7 +8,7 @@ conda env create -f ./envs/py3d.yml
 ```
 For more information please see conda docs linked [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 
-The DOCK3 source code can be downloaded [here](https://github.com/docking-org/dock3) for `plots.py` and `enrich.py` and initialize `DOCKBASE` path.
+The DOCK3 source code can be downloaded [here](https://github.com/docking-org/legacy3) for `plots.py` and `enrich.py` and initialize `DOCKBASE` path.
 
 ```bash
 export DOCKBASE=/path/to/dock37/DOCK-3.7-trunk
