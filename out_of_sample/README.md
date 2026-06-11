@@ -6,13 +6,13 @@ Before running the analyses, install the following software and dependencies:
 
 | Software | Description | Link |
 |-----------|--------------|------|
-| **AlphaFold3** | Structure prediction | [github.com/google-deepmind/alphafold3](https://github.com/google-deepmind/alphafold3) |
-| **APoc** | Alignment of protein pockets | [sites.gatech.edu/cssb/apoc](https://sites.gatech.edu/cssb/apoc) |
-| **DockRMSD** | Ligand RMSD computation | [aideepmed.com/DockRMSD](https://aideepmed.com/DockRMSD) |
+| **AlphaFold3 (v2)** | Structure prediction | [github.com/google-deepmind/alphafold3](https://github.com/google-deepmind/alphafold3) |
+| **APoc (v1.0)** | Alignment of protein pockets | [sites.gatech.edu/cssb/apoc](https://sites.gatech.edu/cssb/apoc) |
+| **DockRMSD (v1.0)** | Ligand RMSD computation | [zhanggroup.org/DockRMSD](https://zhanggroup.org/DockRMSD/) |
 
 You will also need to download the **BioLiP2** database: 🔗 [https://zhanggroup.org/BioLiP](https://zhanggroup.org/BioLiP). 
 
-Instructions for downloading this database using the provided Perl script are available [here](https://aideepmed.com/BioLiP/weekly.html). Note that the script retrieves both the _redundant_ and _non-redundant_ datasets, where the non-redundant set is “a subset of the redundant dataset by protein sequence clustering at 90% sequence identity” ([BioLiP website](https://aideepmed.com/BioLiP/weekly.html)). For our dataset curation, we use the full redundant dataset. Because the Perl script downloads both versions, we remove the non-redundant protein and ligand directories after download, then rename the remaining directories to `protein` and `ligand` within the automatically generated `BioLiP_updated_set` folder.
+Instructions for downloading this database using the provided Perl script are available [here](https://zhanggroup.org/BioLiP/weekly.html). Note that the script retrieves both the _redundant_ and _non-redundant_ datasets, where the non-redundant set is “a subset of the redundant dataset by protein sequence clustering at 90% sequence identity” ([BioLiP website](https://zhanggroup.org/BioLiP/weekly.html)). For our dataset curation, we use the full redundant dataset. Because the Perl script downloads both versions, we remove the non-redundant protein and ligand directories after download, then rename the remaining directories to `protein` and `ligand` within the automatically generated `BioLiP_updated_set` folder.
 
 Although this workflow provides an end-to-end process for dataset curation and initial benchmarking, we are unable to distribute the full dataset in this repository. Instead, we include demo CSV files and sample experimental structures organized to mirror the BioLiP directory structure. We also include a sample set of AF3 outputs only containing the top-ranked mmcif files.
 
@@ -31,6 +31,7 @@ conda install -c conda-forge biopython rdkit
 conda install pandas
 ```
 
+Installation should only take several minutes. In our testing, we used rdkit version 2023.09.6, biopython version 1.83, and pandas version 2.2.2. If the latest release of these packages doesn't work, we suggest installing the packages with the specified versions.
 
 ## 📂 Directory Structure
 
@@ -150,3 +151,5 @@ python 9_save_metrics.py
 The final results include:
 - Pocket-aligned protein-ligand structures 
 - A summary CSV of all performance metrics
+
+This workflow is expected to take 10-15 min without considering the time it takes to predict a complex with AlphaFold3. Please refer to the AlphaFold3 [paper](https://doi.org/10.1038/s41586-024-07487-w) and [GitHub](https://github.com/google-deepmind/alphafold3) to get more insights.
