@@ -22,6 +22,7 @@ On Apple Silicon, `dock37_py27` runs under Rosetta because Python 2.7 is not ava
 
 For more information please see conda docs linked [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
 
+ROC and enrichment scripts (`enrich.py`, `plots.py`, and dependencies) live in `dock_src/`. They are adapted from the [legacy3](https://github.com/docking-org/legacy3) analysis code; no separate checkout is required.
 
 ## Run analysis code
 0. (optional) Set up conda `source "$CONDA_SH"` if applicable.
