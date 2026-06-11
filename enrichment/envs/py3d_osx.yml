@@ -1,0 +1,9 @@
+# Minimal macOS env for enrichment ranking/summary scripts.
+# convert.py and runr.py use only the Python stdlib; split_running_sum.py
+# and collect_auc_summary.py need pandas.
+name: py3d
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pandas

@@ -1,0 +1,15 @@
+# Minimal macOS env for DOCK 3.7 analysis scripts (enrich.py, plots.py).
+# Requires Rosetta on Apple Silicon: run setup_mac_envs.sh or set
+# CONDA_SUBDIR=osx-64 before creating this environment.
+name: dock37_py27
+channels:
+  - free
+  - conda-forge
+dependencies:
+  - python=2.7
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - bsddb=1.0
+  - db=5.3.28
