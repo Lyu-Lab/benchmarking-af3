@@ -29,13 +29,11 @@ done
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONVERT_PY="$SCRIPT_DIR/convert.py"
 RUNR_SH="$SCRIPT_DIR/runr.py"
+DOCK_SRC="$SCRIPT_DIR/dock_src"
+ENRICH_PY="$DOCK_SRC/enrich.py"
+PLOTS_PY="$DOCK_SRC/plots.py"
 
-if [[ -z "${DOCKBASE:-}" ]]; then
-  echo "[ERROR] \$DOCKBASE is not set." >&2
-  exit 2
-fi
-
-for f in "$CONVERT_PY" "$RUNR_SH"; do
+for f in "$CONVERT_PY" "$RUNR_SH" "$ENRICH_PY" "$PLOTS_PY"; do
   [[ -f "$f" ]] || { echo "[ERROR] Missing required file: $f" >&2; exit 2; }
 done
 
@@ -65,8 +63,8 @@ process_one_dir() {
     else
       echo "  Would rank ascending:  (cd $recp_dir && conda activate dock37_py27 && conda activate py3d && python $CONVERT_PY split.csv && conda deactivate)"
     fi
-    echo "  Would AUC/logAUC: (cd $recp_dir && python "$DOCKBASE/analysis/enrich.py" -i . -l ./ligands.name -d ./decoys.name)"
-    echo "                     (cd $recp_dir && python "$DOCKBASE/analysis/plots.py"  -i . -l ./ligands.name -d ./decoys.name)"
+    echo "  Would AUC/logAUC: (cd $recp_dir && python "$ENRICH_PY" -i . -l ./ligands.name -d ./decoys.name)"
+    echo "                     (cd $recp_dir && python "$PLOTS_PY"  -i . -l ./ligands.name -d ./decoys.name)"
     return 0
   fi
 
@@ -76,11 +74,11 @@ process_one_dir() {
     ( cd "$recp_dir" && conda activate dock37_py27 && conda activate py3d && python "$CONVERT_PY" "split.csv" && conda deactivate )
   fi
 
-  ( cd "$recp_dir" && conda activate dock37_py27 && python "$DOCKBASE/analysis/enrich.py" -i . -l ./ligands.name -d ./decoys.name )
-  ( cd "$recp_dir" && conda activate dock37_py27 && python "$DOCKBASE/analysis/plots.py" -i . -l ./ligands.name -d ./decoys.name )
+  ( cd "$recp_dir" && conda activate dock37_py27 && python "$ENRICH_PY" -i . -l ./ligands.name -d ./decoys.name )
+  ( cd "$recp_dir" && conda activate dock37_py27 && python "$PLOTS_PY" -i . -l ./ligands.name -d ./decoys.name )
 }
 
-export CONVERT_PY RUNR_SH DRYRUN
+export CONVERT_PY RUNR_SH ENRICH_PY PLOTS_PY DRYRUN
 export -f process_one_dir
 export -f is_highest_better_metric
 

@@ -35,11 +35,7 @@ fi
 
 cat <<EOF
 
-[INFO] Environments ready. Before running the pipeline:
-
-  export DOCKBASE=/path/to/DOCK-3.7-trunk
-
-Then from enrichment/:
+[INFO] Environments ready. From enrichment/:
 
   conda activate py3d
   python split_running_sum.py --input-dir ./example_running_sum --out-dir ./example_running_sum

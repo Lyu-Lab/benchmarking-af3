@@ -15,3 +15,5 @@ cd prospective
 
 python correlation.py --experimental_data_path cpm_ic50.csv --boltz2_data_path boltz2_data.csv
 ```
+
+Installation and running of the demo should be under 10 minutes.
