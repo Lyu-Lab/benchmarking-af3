@@ -84,7 +84,11 @@ export CONVERT_PY RUNR_SH DRYRUN
 export -f process_one_dir
 export -f is_highest_better_metric
 
-mapfile -t TARGET_DIRS < <(find "$ROOT" -mindepth 2 -maxdepth 2 -type f -name "split.csv" -printf '%h\n' | sort -u)
+
+TARGET_DIRS=()
+while IFS= read -r d; do
+  TARGET_DIRS+=("$d")
+done < <(find "$ROOT" -mindepth 2 -maxdepth 2 -type f -name "split.csv" -exec dirname {} \; | sort -u)
 echo "[INFO] Found ${#TARGET_DIRS[@]} target directories under $ROOT"
 
 if [[ "$DRYRUN" -eq 1 ]]; then
